@@ -23,8 +23,15 @@ class OrderController extends Controller
     public function actionIndex()
     {
         //code
-        $data = (array)json_decode(Yii::$app->request->getRawBody());
+        $headers = Yii::$app->response->headers;
+        $headers->add('Pragma', 'no-cache');
+        $headers->add('Access-Control-Allow-Origin', '*');
 
+        $data = (array)json_decode(Yii::$app->request->getRawBody());
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if (count ($data) == 0 )
+            $data = Yii::$app->request->post() ;
 
         $user = User::findIdentityByAccessToken($data['token']);
         if ($user){
@@ -35,7 +42,7 @@ class OrderController extends Controller
                 $orders = $user->getOrders();
             }
             foreach ($orders as $order){
-                $return['result'][]= $order->fields() ;
+                $return['results'][]= $order->fields() ;
             }
             return json_encode($return) ;
         }else{
@@ -48,7 +55,14 @@ class OrderController extends Controller
     public function actionView()
     {
         //code
+        $headers = Yii::$app->response->headers;
+        $headers->add('Pragma', 'no-cache');
+        $headers->add('Access-Control-Allow-Origin', '*');
         $data = (array)json_decode(Yii::$app->request->getRawBody());
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if (count ($data) == 0 )
+            $data = Yii::$app->request->post() ;
 
         $user = User::findIdentityByAccessToken($data['token']);
         if ($user){
@@ -72,8 +86,14 @@ class OrderController extends Controller
     public function actionAdd()
     {
         //code
+        $headers = Yii::$app->response->headers;
+        $headers->add('Pragma', 'no-cache');
+        $headers->add('Access-Control-Allow-Origin', '*');
         $data = (array)json_decode(Yii::$app->request->getRawBody());
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
+        if (count ($data) == 0 )
+            $data = Yii::$app->request->post() ;
         $user = User::findIdentityByAccessToken($data['token']);
         if ($user){
             Yii::$app->user->switchIdentity($user);
@@ -97,8 +117,13 @@ class OrderController extends Controller
     public function actionUpdate()
     {
         //code
+        $headers = Yii::$app->response->headers;
+        $headers->add('Pragma', 'no-cache');
+        $headers->add('Access-Control-Allow-Origin', '*');
         $data = (array)json_decode(Yii::$app->request->getRawBody());
-
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if (count ($data) == 0 )
+            $data = Yii::$app->request->post() ;
         $user = User::findIdentityByAccessToken($data['token']);
         if ($user){
             Yii::$app->user->switchIdentity($user);

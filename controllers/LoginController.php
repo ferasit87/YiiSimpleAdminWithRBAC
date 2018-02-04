@@ -22,8 +22,14 @@ class LoginController extends Controller
     {
         //code
         $model = new LoginForm();
+
+        $headers = Yii::$app->response->headers;
+        $headers->add('Pragma', 'no-cache');
+        $headers->add('Access-Control-Allow-Origin', '*');
         $data = (array)json_decode(Yii::$app->request->getRawBody());
-        $data['LoginForm'] = (array)$data['LoginForm'];
+        if (count ($data) == 0 )
+            $data = Yii::$app->request->post() ;
+        else $data['LoginForm'] = (array)$data['LoginForm'];
         if ($model->load($data) && $model->login()) {
             return json_encode($model->getUser()->fields() );
         }

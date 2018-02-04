@@ -31,7 +31,7 @@ class m180203_230216_create_table_user extends Migration
             'email' => 'ferasit87@gmail.com',
             'isAdmin' => '1',
             'status' => '10',
-            'created_at' => 'NOW()'
+            'created_at' => date('Y-m-d H:i:s')
 
         ]);
 
@@ -42,7 +42,7 @@ class m180203_230216_create_table_user extends Migration
             'email' => 'feras.daeef@gmail.com',
             'isAdmin' => '0',
             'status' => '10',
-            'created_at' => 'NOW()'
+            'created_at' => date('Y-m-d H:i:s')
         ]);
     }
 
